@@ -4,28 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  check-changes:
-    runs-on: ubuntu-latest
-    outputs:
-      changes: ${{ steps.check-changes.outputs.changes }}
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4.2.2
-      with:
-        fetch-depth: 2
-
-    - name: Check for changes in index.html.j2
-      id: check-changes
-      run: |
-        if git diff --name-only HEAD~1 HEAD | grep -q 'ansible/roles/nginx/templates/index.html.j2'; then
-          echo "changes=true" >> $GITHUB_ENV
-        else
-          echo "changes=false" >> $GITHUB_ENV
-        fi
-
   build-and-push:
-    needs: check-changes
-    if: needs.check-changes.outputs.changes == 'true'
     runs-on: ubuntu-latest
 
     steps:
@@ -46,7 +25,7 @@ jobs:
       with:
         context: .
         push: true
-        tags: wineperm/nginx-ansible:latest
+        tags: wineperm/nginx-custom:latest
 
   deploy:
     runs-on: ubuntu-latest
