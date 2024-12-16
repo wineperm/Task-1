@@ -1,0 +1,41 @@
+---
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Install Docker
+  apt:
+    name: docker.io
+    state: present
+
+- name: Start Docker service
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Pull Nginx Docker image
+  docker_image:
+    name: nginx
+    source: pull
+
+- name: Run Nginx Docker container
+  docker_container:
+    name: nginx
+    image: nginx
+    state: started
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /usr/share/nginx/html:/usr/share/nginx/html
+
+- name: Download image
+  get_url:
+    url: https://github.com/wineperm/Diplom-yc/blob/main/APP/html/KLS_netology_12.07.2004.jpeg?raw=true
+    dest: /usr/share/nginx/html/KLS_netology_12.07.2004.jpeg
+
+- name: Customize default Nginx page
+  template:
+    src: index.html.j2
+    dest: /usr/share/nginx/html/index.html
