@@ -2,17 +2,23 @@
 - name: Update apt cache
   apt:
     update_cache: yes
+  tags:
+    - nginx
 
 - name: Install Nginx
   apt:
     name: nginx
     state: present
+  tags:
+    - nginx
 
 - name: Start Nginx service
   service:
     name: nginx
     state: started
     enabled: yes
+  tags:
+    - nginx
 
 - name: Allow SSH, HTTP, and HTTPS through firewall
   ufw:
@@ -23,30 +29,42 @@
     - 22
     - 80
     - 443
+  tags:
+    - nginx
 
 - name: Enable UFW
   ufw:
     state: enabled
     policy: deny
+  tags:
+    - nginx
 
 - name: Ensure UFW is enabled and running
   ufw:
     state: enabled
     default: deny
+  tags:
+    - nginx
 
 - name: Reload UFW to apply changes
   ufw:
     state: reloaded
+  tags:
+    - nginx
 
 - name: Download image
   get_url:
     url: https://github.com/wineperm/Diplom-yc/blob/main/APP/html/KLS_netology_12.07.2004.jpeg?raw=true
     dest: /usr/share/nginx/html/KLS_netology_12.07.2004.jpeg
+  tags:
+    - nginx
 
 - name: Customize default Nginx page
   template:
     src: index.html.j2
     dest: /usr/share/nginx/html/index.html
+  tags:
+    - nginx
 
 - name: Update Nginx configuration
   copy:
@@ -66,8 +84,12 @@
               try_files $uri $uri/ =404;
           }
       }
+  tags:
+    - nginx
 
 - name: Restart Nginx service
   service:
     name: nginx
     state: restarted
+  tags:
+    - nginx
