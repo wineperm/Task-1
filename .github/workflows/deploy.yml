@@ -30,7 +30,7 @@ jobs:
         chmod 600 ~/.ssh/id_rsa
 
     - name: Run Ansible playbook
-      env:
-        ANSIBLE_HOST_KEY_CHECKING: false
+      # env:
+      #   ANSIBLE_HOST_KEY_CHECKING: false
       run: |
         ansible-playbook -i inventory/hosts.ini ansible/site.yml
