@@ -7,8 +7,26 @@ on:
   workflow_dispatch:
 
 jobs:
+  check-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      changes: ${{ steps.check-changes.outputs.changes }}
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4.2.2
+
+    - name: Check for changes in index.html.j2
+      id: check-changes
+      run: |
+        if git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -q 'ansible/roles/nginx/templates/index.html.j2'; then
+          echo "changes=true" >> $GITHUB_ENV
+        else
+          echo "changes=false" >> $GITHUB_ENV
+        fi
+
   build-and-push:
-    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    needs: check-changes
+    if: needs.check-changes.outputs.changes == 'true'
     runs-on: ubuntu-latest
 
     steps:
