@@ -46,7 +46,7 @@ jobs:
       with:
         context: .
         push: true
-        tags: wineperm/nginx-custom:latest
+        tags: wineperm/nginx-ansible:latest
 
   deploy:
     runs-on: ubuntu-latest
