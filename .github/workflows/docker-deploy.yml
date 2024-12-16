@@ -73,9 +73,9 @@ jobs:
         echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
 
-    - name: Run Ansible playbook
+    - name: Run Ansible playbook for Nginx Docker
       env:
         ANSIBLE_HOST_KEY_CHECKING: false
         ANSIBLE_SSH_PRIVATE_KEY_FILE: ~/.ssh/id_rsa
       run: |
-        ansible-playbook -i inventory/hosts.ini ansible/site.yml
+        ansible-playbook -i inventory/hosts.ini ansible/site.yml --tags nginx-docker
