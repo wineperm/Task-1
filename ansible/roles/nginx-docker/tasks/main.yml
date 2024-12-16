@@ -12,13 +12,13 @@
 
 - name: Pull Docker image
   docker_image:
-    name: wineperm/nginx-custom:latest
+    name: wineperm/nginx-ansible:latest
     source: pull
 
 - name: Run Docker container
   docker_container:
     name: nginx-custom
-    image: wineperm/nginx-custom:latest
+    image: wineperm/nginx-ansible:latest
     state: started
     ports:
       - "80:80"
