@@ -32,5 +32,6 @@ jobs:
     - name: Run Ansible playbook
       env:
         ANSIBLE_HOST_KEY_CHECKING: false
+        ANSIBLE_SSH_PRIVATE_KEY_FILE: ~/.ssh/id_rsa
       run: |
-        ansible-playbook -i inventory/hosts.ini ansible/site.yml --private-key ~/.ssh/id_rsa
+        ansible-playbook -i inventory/hosts.ini ansible/site.yml
