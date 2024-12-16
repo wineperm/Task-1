@@ -1,0 +1,11 @@
+---
+- name: Configure Nginx web server
+  hosts: webservers
+  become: yes
+  roles:
+    - role: nginx
+      when: use_docker is not defined or not use_docker
+
+    - role: nginx
+      tasks_from: docker
+      when: use_docker is defined and use_docker
