@@ -1,9 +1,6 @@
 name: Build and Deploy Docker Container
 
 on:
-  push:
-    paths:
-      - 'ansible/roles/nginx/templates/index.html.j2'
   workflow_dispatch:
 
 jobs:
