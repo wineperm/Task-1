@@ -3,22 +3,30 @@
   apt:
     name: docker.io
     state: present
+  tags:
+    - nginx-docker
 
 - name: Start Docker service
   service:
     name: docker
     state: started
     enabled: yes
+  tags:
+    - nginx-docker
 
 - name: Pull Docker image
   docker_image:
-    name: wineperm/nginx-ansible:latest
+    name: wineperm/nginx-custom:latest
     source: pull
+  tags:
+    - nginx-docker
 
 - name: Run Docker container
   docker_container:
-    name: nginx-ansible
-    image: wineperm/nginx-ansible:latest
+    name: nginx-custom
+    image: wineperm/nginx-custom:latest
     state: started
     ports:
       - "80:80"
+  tags:
+    - nginx-docker
