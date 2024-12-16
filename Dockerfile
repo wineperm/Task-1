@@ -1,4 +1,4 @@
-# Use the official Nginx image as a parent image
+# Use the official Nginx image as a base image
 FROM nginx:latest
 
 # Copy custom Nginx configuration file
