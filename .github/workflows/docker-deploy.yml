@@ -1,10 +1,14 @@
 name: Build and Deploy Docker Container
 
 on:
+  push:
+    paths:
+      - 'ansible/roles/nginx/templates/index.html.j2'
   workflow_dispatch:
 
 jobs:
   build-and-push:
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
 
     steps:
