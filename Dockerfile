@@ -5,7 +5,7 @@ FROM nginx:latest
 COPY ansible/roles/nginx/templates/index.html.j2 /usr/share/nginx/html/index.html
 
 # Copy the image to the Nginx HTML directory
-COPY ansible/roles/nginx/templates/KLS_netology_12.07.2004.jpeg /usr/share/nginx/html/KLS_netology_12.07.2004.jpeg
+COPY ansible/roles/nginx-docker/templates/KLS_netology_12.07.2004.jpeg /usr/share/nginx/html/KLS_netology_12.07.2004.jpeg
 
 # Expose port 80
 EXPOSE 80
