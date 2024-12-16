@@ -1,17 +1,14 @@
-# Use the official Ubuntu image as the base image
-FROM ubuntu:20.04
+# Use the official Nginx image as a parent image
+FROM nginx:latest
 
-# Install necessary packages
-RUN apt-get update && \
-    apt-get install -y python3 python3-pip && \
-    pip3 install ansible
+# Copy custom Nginx configuration file
+COPY ansible/roles/nginx/templates/index.html.j2 /usr/share/nginx/html/index.html
 
-# Copy the Ansible playbook and inventory files
-COPY ansible /ansible
-COPY inventory /inventory
+# Copy the image to the Nginx HTML directory
+COPY ansible/roles/nginx/templates/KLS_netology_12.07.2004.jpeg /usr/share/nginx/html/KLS_netology_12.07.2004.jpeg
 
-# Set the working directory
-WORKDIR /ansible
+# Expose port 80
+EXPOSE 80
 
-# Run the Ansible playbook
-CMD ["ansible-playbook", "-i", "/inventory/hosts.ini", "site.yml"]
+# Start Nginx server
+CMD ["nginx", "-g", "daemon off;"]
