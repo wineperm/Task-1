@@ -48,6 +48,25 @@
     src: index.html.j2
     dest: /usr/share/nginx/html/index.html
 
+- name: Update Nginx configuration
+  copy:
+    dest: /etc/nginx/sites-available/default
+    content: |
+      server {
+          listen 80 default_server;
+          listen [::]:80 default_server;
+
+          root /usr/share/nginx/html;
+
+          index index.html index.htm index.nginx-debian.html;
+
+          server_name _;
+
+          location / {
+              try_files $uri $uri/ =404;
+          }
+      }
+
 - name: Restart Nginx service
   service:
     name: nginx
